@@ -81,21 +81,16 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 // 3 params data, getyearcb, getWinners
-function getWinnersByYear(getWinners, getYears) {
-    const results = (getWinners, getYears).map((item, index) => {
-        return `In ${index}, ${item} won the world cup!`
+function getWinnersByYear(array, getYearsCB, getWinnersCB) {
+    const arrayYears = getYearsCB(array, getFinals)
+    const arrayWinners = getWinnersCB(array, getFinals)
+
+    return arrayWinners.map(function(item, index) {
+        return `In ${arrayYears[index]}, ${item} won the world cup!`
     })
-    return results
-    /* code here */
-    // store the result in a variable 
-    // use map with item and index
-    // map over winners use index to refer to the year and use item to refer to the curren value in winners
 }
-console.log(getWinnersByYear(getWinners(fifaData), getYears(fifaData)))
 
-
-
-
+console.log(getWinnersByYear(fifaData, getYears, getWinners))
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
  1. Receive the callback function getFinals from task 2 ensure you pass in the data as an argument
@@ -107,14 +102,17 @@ Use the higher order function getAverageGoals to do the following:
 */
 // getfinals cb
 
-function getAverageGoals(/* code here */) {
+function getAverageGoals(getFinalsCB) {
    /* code here */
-    // hint if you want the 2nd dceimal look up .toFixed(2);
-    // add up all the teams goals divide by the length of the data 
-    // you may need to split this into two parts.
+   const finalsArray = getFinalsCB
+
+   const totalGoals = finalsArray.reduce(function(acc, item) {
+        return acc + item["Away Team Goals"] + item["Home Team Goals"];
+   },0)
+   return (totalGoals/finalsArray.length).toFixed(2)
 }
 
-
+console.log(getAverageGoals(getFinals(fifaData)));
 
 
 /// 🥅 STRETCH 🥅 ///
